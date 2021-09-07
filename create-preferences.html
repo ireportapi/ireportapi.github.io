@@ -1,0 +1,41 @@
+<p>This method allows a client to register a guild with iReport. <strong>This is not required if the iReport bot has joined the guild</strong>, and is only needed to be run once if the iReport bot has not joined a given guild.</p>
+
+<p><strong>This should not be used to add unapproved iReport servers to iReport. As an API client, you do not have authority to approve a guild, and there are protections in place to ensure that non-approved guilds cannot create reports. Please contact the iReport Server for more information.</strong></p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authorization token</strong>.</li>
+  <li><strong>The body can’t be empty</strong> and must include <code>guild_id</code>.</li>
+</ul>
+
+<p><code>{
+    guild_id: 123
+}</code></p>
+
+<h3 id="response">Response</h3>
+
+<p><strong>If the configuration already exists:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    created: false
+    message: "Configuration already exists."
+}</code></p>
+
+<p><strong>If the configuration does not exist:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    created: true,
+    preferences: {
+        _id: guild_id
+        channel: null,
+        modrole: null,
+        approved: false
+    }
+}</code></p>
+
+<p><strong>To ensure the safety of the iReport network, a guild must be approved by iReport. Please contact the iReport server for more details about how this can be achieved</strong>.</p>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>

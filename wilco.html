@@ -1,0 +1,59 @@
+<p>This method is a multi-part specialised method. <strong>It may be deprecated in future releases of the iReport API, and thus is not recommended for use.</strong></p>
+
+<p>Given a Discord User ID <strong>user_id</strong>, a Discord Guild ID <strong>guild_id</strong>, and a <strong>reason</strong>, the method determines whether the given user has a current report, and that the reason is valid.</p>
+
+<p>If the given guild is an iReport Guild, and the report is a valid iReport reason (see <a href="#report-is-valid-reason">is-valid-reason</a>), return the latest report if there is one. If there isn’t one, return a 200 response.</p>
+
+<p>If the guild is not in iReport, the endpoint will return Status 403. If the reason is invalid, return Status 204.</p>
+
+<p>This endpoint is useful for creating an automatic iReport Suggestion dialogue upon ban (ie, prompt a user to create an iReport if a ban created through the bot has a valid reason). Make use of the most recent report to inform the user if they have an existing report, and to not create a new report if the existing matches the current reason. You can also implement your own logic to do this.</p>
+
+<p>It is recommended you use other methods for this type of functionality:</p>
+<ul>
+  <li><a href="#report-is-valid-reason">report/is-valid-reason</a></li>
+  <li><a href="#lookup-user-id">lookup/user-id</a></li>
+</ul>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authorization token</strong>.</li>
+  <li><strong>The body can’t be empty</strong> and must include <code>user_id</code>, <code>guild_id</code> and <code>reason</code>.</li>
+</ul>
+
+<p><code>{
+    user_id: 12345
+    guild_id: 12345
+    reason: Trolling
+}</code></p>
+
+<h3 id="response">Response</h3>
+
+<p><strong>If reason is not a valid iReport reason:</strong></p>
+
+<p><code>Status: 204 No Content</code>
+<code>{
+    error: "Not a valid report"
+}</code></p>
+
+<p><strong>If the guild does not exist in iReport:</strong></p>
+
+<p><code>Status: 403 Forbidden</code>
+<code>{
+    error: "Guild not iReport"
+}</code></p>
+
+<p><strong>If the reason is valid and the given guild exists in iReport:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    latestReport: null 
+    configuredChannel: null 
+}</code></p>
+
+<ul>
+  <li>latestReport may contain report, see structure in <a href="#lookup-report-id">lookup/report-id</a></li>
+  <li>configuredChannel may contain configured Discord channel ID.</li>
+</ul>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>

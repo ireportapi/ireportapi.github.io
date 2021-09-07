@@ -1,0 +1,24 @@
+<p>This method allows a client to set the server-assigned mod role, which is the Discord Role ID that has command permissions attached to it.</p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authorization token</strong>.</li>
+  <li><strong>The body can’t be empty</strong> and must include <code>guild_id</code>, and <code>role_id</code>.</li>
+</ul>
+
+<p><code>{
+    guild_id: 123
+    role_id: 123
+}</code></p>
+
+<h3 id="response">Response</h3>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    modrole: 123 
+}</code></p>
+
+<p><strong><code>modrole</code> returned is the new modrole.</strong></p>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>

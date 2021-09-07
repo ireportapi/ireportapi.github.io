@@ -1,0 +1,13 @@
+<h3 id="error">Error</h3>
+
+<p>Error responses are simply returning <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">standard HTTP error codes</a>. Some extra information may be handed back in the response body if necessary.</p>
+
+<p>A call that does not contain the expected body parameters typically returns a 400 status, and contains a message such as:</p>
+
+<p><code>Status: 400</code>
+<code>{
+    error: 'Access denied: Invalid Query'
+}</code></p>
+
+<p>Refer to the HTTP error codes for more information, along with the specific API endpoint documentation.</p>
+

@@ -1,0 +1,35 @@
+<p>This method allows a client to retrieve a report given a Report ID.</p>
+
+<h3 id="request">Request</h3>
+<p>Expects the following URL query parameters:</p>
+<ul>
+  <li>report_id</li>
+</ul>
+
+<p>The headers must include a <strong>valid authorization token</strong>.</p>
+
+<h3 id="response">Response</h3>
+
+<p><strong>If an iReport with the given ID is found, expect:</strong></p>
+
+<p><code>Status: 200 OK</code></p>
+<pre><code>{
+    "_id": "1629801524773",
+    "user_id": "195531486638637056",
+    "reason": "Spam and trolling",
+    "guild": "538992072301084683",
+    "reporter": "297567836254240768",
+    "created_at": "2021-08-24T10:38:44.773Z",
+    "audited": false
+}
+</code></pre>
+
+<p><strong>If a report is not found, expect:</strong></p>
+
+<p><code>Status: 404 Not Found</code></p>
+<pre><code>{
+    "error": "Report not found."
+}
+</code></pre>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>

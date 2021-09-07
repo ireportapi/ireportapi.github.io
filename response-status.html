@@ -1,0 +1,28 @@
+<h2 id="authorization">Authorization</h2>
+
+<p>Authorization is given using a Bearer token as a header to each API request.</p>
+
+<p><code>Authorization: bearer TOKEN</code></p>
+
+<p>Request an iReport token via the iReport server.</p>
+
+<h2 id="access-levels">Access Levels</h2>
+
+<p>The iReport API has a set of distinct access levels to ensure security and prevent superflous access to user data. The required access level is stated in the documentation for each API endpoints. <strong>An access level is associated with each token.</strong></p>
+
+<p>For each access level, every access lower than it is granted (ie, level 30 access gets level 10 access too.)</p>
+
+<h3 id="10---statistics">10 - Statistics</h3>
+<p>Level 10 access is used for statistics; ie, viewing metadata of report data, rather than the actual reports themselves. For example, this access may be used to view the amount of reports created in a set of specific filters, but will not expose any content of the data.</p>
+
+<h3 id="30---read-operations">30 - Read Operations</h3>
+<p>Level 30 access allows for Read operations on the iReport database; ie, viewing, and looking up, the content of reports. It does not allow for other CRUD operations, nor does it allow for accessing of bot-specific functionality, like viewing a given guild’s assigned <strong>notification channel</strong> and <strong>mod role</strong>.</p>
+
+<h3 id="50---create-operations">50 - Create Operations</h3>
+<p>Level 50 access allows the client to create new iReports, as well allow for general bot operations. A client at this level can change the <strong>mod role</strong> and <strong>notification channel</strong> of its given guild, allowing it to act as its own iReport bot.</p>
+
+<h3 id="70---delete-operations">70 - Delete Operations</h3>
+<p>Level 70 access allows clients to delete iReports.</p>
+
+<h3 id="100---super-admin">100 - Super Admin</h3>
+<p>This access level is restricted to the official iReport bot. Specific functionality for this access level is undocumented, as it is specific to the needs of the official bot.</p>

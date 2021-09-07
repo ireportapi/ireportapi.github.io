@@ -1,0 +1,24 @@
+<p>This method allows a client to retrieve the server-assigned Notification Channel, which is the Discord Channel ID that is used for iReport Notifications, such as join notifications and Report Suggestions.</p>
+
+<h3 id="request">Request</h3>
+
+<p>Expects the following URL query parameters:</p>
+<ul>
+  <li>
+    <p>guild_id</p>
+  </li>
+  <li>
+    <p>The headers must include a <strong>valid authorization token</strong>.</p>
+  </li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    channel: 123 
+}</code></p>
+
+<p><strong><code>channel</code> may be null if not guild is configured.</strong></p>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>

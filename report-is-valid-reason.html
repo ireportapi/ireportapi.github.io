@@ -1,0 +1,29 @@
+<p>This method allows a client to determine whether a given ban reason (string) is a potentially valid iReport reason. This may be used to implement an <strong>iReport Suggestions</strong> feature for users - create reports upon ban.</p>
+
+<h3 id="request">Request</h3>
+<p>Expects the following URL query parameters:</p>
+<ul>
+  <li>reason (string)</li>
+</ul>
+
+<p>The headers must include a <strong>valid authorization token</strong>.</p>
+
+<h3 id="response">Response</h3>
+
+<p><strong>If the reason is valid, expect:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    "valid": true
+}
+</code></p>
+
+<p><strong>If the reason is not valid, expect:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    "valid": false
+}
+</code></p>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>

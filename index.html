@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<head>
+  <title>iReport API</title>
+  <meta charset='utf-8'/>
+  <meta name='description' content='Documentation website'/>
+  <link href='assets.css' rel='stylesheet' type='text/css'>
+</head>
+<body>  
+  <nav id='sidebar'>
+	<h1>iReport API</h1>
+<ul id='links'>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+  
+  <li><h2>About</h2>
+    <ul>
+    
+              
+        <li class=''><a href='#'></a></li>
+      
+    
+              
+        <li class=''><a href='#/response-status'>Authorization & Access Levels</a></li>
+              
+        <li class=''><a href='#/status-codes'>Status Codes</a></li>
+      
+    
+    </ul>
+  </li>
+
+  <li><h2>Access 30</h2>
+    <ul>
+    
+              
+        <li class=''><a href='#'></a></li>
+      
+    
+              
+        <li class='GET'><a href='#/report-is-valid-reason'>Is Ban Valid iReport</a></li>
+              
+        <li class='GET'><a href='#/lookup-user-id'>Lookup by User ID</a></li>
+              
+        <li class='GET'><a href='#/lookup-report-id'>Lookup by Report ID</a></li>
+      
+    
+    </ul>
+  </li>
+
+  <li><h2>Access 50</h2>
+    <ul>
+    
+              
+        <li class=''><a href='#'></a></li>
+      
+    
+              
+        <li class='POST'><a href='#/wilco'>Wilco</a></li>
+              
+        <li class='POST'><a href='#/set-notification-channel'>Set Notification Channel</a></li>
+              
+        <li class='POST'><a href='#/set-modrole'>Set Mod Role</a></li>
+              
+        <li class='GET'><a href='#/get-notification-channel'>Get Notification Channel</a></li>
+              
+        <li class='GET'><a href='#/get-modrole'>Get Mod Role</a></li>
+              
+        <li class='POST'><a href='#/create-report'>Create Preferences</a></li>
+              
+        <li class='POST'><a href='#/create-preferences'>Create Preferences</a></li>
+      
+    
+    </ul>
+  </li>
+
+  <li><h2>Access 70</h2>
+    <ul>
+    
+              
+        <li class=''><a href='#'></a></li>
+      
+    
+              
+        <li class='DELETE'><a href='#/delete-a-thing'>Delete an iReport</a></li>
+      
+    
+    </ul>
+  </li>
+
+</ul>
+</nav>
+
+
+<section id='content'>
+  <div class="introduction">
+  <h2>Welcome to the iReport API Preview</h2>
+
+  <p>iReport is a network of Discord servers that share reports about solely malicious and troublesome user accounts. This is the first preview version of the iReport API, a new way to integrate a range of services into the rich and audited database of reports, covering over 170k unique members. To submit feedback, please visit the iReport server.</p>
+
+  <!--
+  <p>iReport is a network of Discord servers that share reports about solely malicious and troublesome users accounts. While the bot has an official implementation, the introduction of the iReport API allows deeper integration with a range of services, Discord bots, and other experimental hacks that weren't possible before.</p>
+  -->
+  <div>
+    <p class="callout">Current Version</p>
+    <p>0.0.1 - Pre Release | Last Updated Sep 8th, 2021</p>
+  </div>
+</div>
+    
+  
+  
+    <h2 class="category-title">About</h2>
+      
+      <div class="article">
+        
+        <div class="post top-rounded">
+          <a name='/response-status' href='#/response-status'>
+            <h2>Authorization & Access Levels </h2>
+          </a>
+    
+          <section class='body'>
+            <h2 id="authorization">Authorization</h2>
+
+<p>Authorization is given using a Bearer token as a header to each API request.</p>
+
+<p><code>Authorization: bearer TOKEN</code></p>
+
+<p>Request an iReport token via the iReport server.</p>
+
+<h2 id="access-levels">Access Levels</h2>
+
+<p>The iReport API has a set of distinct access levels to ensure security and prevent superflous access to user data. The required access level is stated in the documentation for each API endpoints. <strong>An access level is associated with each token.</strong></p>
+
+<p>For each access level, every access lower than it is granted (ie, level 30 access gets level 10 access too.)</p>
+
+<h3 id="10---statistics">10 - Statistics</h3>
+<p>Level 10 access is used for statistics; ie, viewing metadata of report data, rather than the actual reports themselves. For example, this access may be used to view the amount of reports created in a set of specific filters, but will not expose any content of the data.</p>
+
+<h3 id="30---read-operations">30 - Read Operations</h3>
+<p>Level 30 access allows for Read operations on the iReport database; ie, viewing, and looking up, the content of reports. It does not allow for other CRUD operations, nor does it allow for accessing of bot-specific functionality, like viewing a given guild’s assigned <strong>notification channel</strong> and <strong>mod role</strong>.</p>
+
+<h3 id="50---create-operations">50 - Create Operations</h3>
+<p>Level 50 access allows the client to create new iReports, as well allow for general bot operations. A client at this level can change the <strong>mod role</strong> and <strong>notification channel</strong> of its given guild, allowing it to act as its own iReport bot.</p>
+
+<h3 id="70---delete-operations">70 - Delete Operations</h3>
+<p>Level 70 access allows clients to delete iReports.</p>
+
+<h3 id="100---super-admin">100 - Super Admin</h3>
+<p>This access level is restricted to the official iReport bot. Specific functionality for this access level is undocumented, as it is specific to the needs of the official bot.</p>
+
+          </section>
+        </div>
+      </div>
+      
+      <div class="article">
+        
+        <div class="post top-rounded">
+          <a name='/status-codes' href='#/status-codes'>
+            <h2>Status Codes </h2>
+          </a>
+    
+          <section class='body'>
+            <h3 id="error">Error</h3>
+
+<p>Error responses are simply returning <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">standard HTTP error codes</a>. Some extra information may be handed back in the response body if necessary.</p>
+
+<p>A call that does not contain the expected body parameters typically returns a 400 status, and contains a message such as:</p>
+
+<p><code>Status: 400</code>
+<code>{
+    error: 'Access denied: Invalid Query'
+}</code></p>
+
+<p>Refer to the HTTP error codes for more information, along with the specific API endpoint documentation.</p>
+
+
+          </section>
+        </div>
+      </div>
+      
+  
+    <h2 class="category-title">Access 30</h2>
+      
+      <div class="article">
+        
+          <div class="method-header GET">
+            <code><b>GET</b> /ireport/report/is-valid-reason</code>
+          </div> 
+        
+        <div class="post ">
+          <a name='/report-is-valid-reason' href='#/report-is-valid-reason'>
+            <h2>Is Ban Valid iReport </h2>
+          </a>
+    
+          <section class='body'>
+            <p>This method allows a client to determine whether a given ban reason (string) is a potentially valid iReport reason. This may be used to implement an <strong>iReport Suggestions</strong> feature for users - create reports upon ban.</p>
+
+<h3 id="request">Request</h3>
+<p>Expects the following URL query parameters:</p>
+<ul>
+  <li>reason (string)</li>
+</ul>
+
+<p>The headers must include a <strong>valid authorization token</strong>.</p>
+
+<h3 id="response">Response</h3>
+
+<p><strong>If the reason is valid, expect:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    "valid": true
+}
+</code></p>
+
+<p><strong>If the reason is not valid, expect:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    "valid": false
+}
+</code></p>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>
+
+          </section>
+        </div>
+      </div>
+      
+      <div class="article">
+        
+          <div class="method-header GET">
+            <code><b>GET</b> /ireport/lookup/user-id</code>
+          </div> 
+        
+        <div class="post ">
+          <a name='/lookup-user-id' href='#/lookup-user-id'>
+            <h2>Lookup by User ID </h2>
+          </a>
+    
+          <section class='body'>
+            <p>This method allows a client to retrieve a report given a standard Discord User ID.</p>
+
+<h3 id="request">Request</h3>
+<p>Expects the following URL query parameters:</p>
+<ul>
+  <li>user_id</li>
+</ul>
+
+<p>The headers must include a <strong>valid authorization token</strong>.</p>
+
+<h3 id="response">Response</h3>
+
+<p><strong>If an iReport with the given ID is found, expect:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>[
+    {
+        "_id": "1629801524773",
+        "user_id": "195531486638637056",
+        "reason": "Spam and trolling",
+        "guild": "538992072301084683",
+        "reporter": "297567836254240768",
+        "created_at": "2021-08-24T10:38:44.773Z",
+        "audited": false
+    }
+]
+</code></p>
+
+<p><strong>If there are <em>multiple</em> reports, expect:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>[
+    {
+        "_id": "1629801524773",
+        "user_id": "195531486638637056",
+        "reason": "Spam and trolling",
+        "guild": "538992072301084683",
+        "reporter": "297567836254240768",
+        "created_at": "2021-08-24T10:38:44.773Z",
+        "audited": false
+    },
+    {
+        "_id": "1629801524775",
+        "user_id": "195531486638637056",
+        "reason": "Harassing users",
+        "guild": "538992072301084683",
+        "reporter": "297567836254240768",
+        "created_at": "2021-08-25T10:38:44.773Z",
+        "audited": false
+    },
+]
+</code></p>
+
+<p><strong>If a report is not found, expect:</strong></p>
+
+<p><code>Status: 404 Not Found</code></p>
+<pre><code>{
+    "error": "Report not found."
+}
+</code></pre>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>
+
+          </section>
+        </div>
+      </div>
+      
+      <div class="article">
+        
+          <div class="method-header GET">
+            <code><b>GET</b> /ireport/lookup/user-id</code>
+          </div> 
+        
+        <div class="post ">
+          <a name='/lookup-report-id' href='#/lookup-report-id'>
+            <h2>Lookup by Report ID </h2>
+          </a>
+    
+          <section class='body'>
+            <p>This method allows a client to retrieve a report given a Report ID.</p>
+
+<h3 id="request">Request</h3>
+<p>Expects the following URL query parameters:</p>
+<ul>
+  <li>report_id</li>
+</ul>
+
+<p>The headers must include a <strong>valid authorization token</strong>.</p>
+
+<h3 id="response">Response</h3>
+
+<p><strong>If an iReport with the given ID is found, expect:</strong></p>
+
+<p><code>Status: 200 OK</code></p>
+<pre><code>{
+    "_id": "1629801524773",
+    "user_id": "195531486638637056",
+    "reason": "Spam and trolling",
+    "guild": "538992072301084683",
+    "reporter": "297567836254240768",
+    "created_at": "2021-08-24T10:38:44.773Z",
+    "audited": false
+}
+</code></pre>
+
+<p><strong>If a report is not found, expect:</strong></p>
+
+<p><code>Status: 404 Not Found</code></p>
+<pre><code>{
+    "error": "Report not found."
+}
+</code></pre>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>
+
+          </section>
+        </div>
+      </div>
+      
+  
+    <h2 class="category-title">Access 50</h2>
+      
+      <div class="article">
+        
+          <div class="method-header POST">
+            <code><b>POST</b> /ireport/wilco</code>
+          </div> 
+        
+        <div class="post ">
+          <a name='/wilco' href='#/wilco'>
+            <h2>Wilco </h2>
+          </a>
+    
+          <section class='body'>
+            <p>This method is a multi-part specialised method. <strong>It may be deprecated in future releases of the iReport API, and thus is not recommended for use.</strong></p>
+
+<p>Given a Discord User ID <strong>user_id</strong>, a Discord Guild ID <strong>guild_id</strong>, and a <strong>reason</strong>, the method determines whether the given user has a current report, and that the reason is valid.</p>
+
+<p>If the given guild is an iReport Guild, and the report is a valid iReport reason (see <a href="#report-is-valid-reason">is-valid-reason</a>), return the latest report if there is one. If there isn’t one, return a 200 response.</p>
+
+<p>If the guild is not in iReport, the endpoint will return Status 403. If the reason is invalid, return Status 204.</p>
+
+<p>This endpoint is useful for creating an automatic iReport Suggestion dialogue upon ban (ie, prompt a user to create an iReport if a ban created through the bot has a valid reason). Make use of the most recent report to inform the user if they have an existing report, and to not create a new report if the existing matches the current reason. You can also implement your own logic to do this.</p>
+
+<p>It is recommended you use other methods for this type of functionality:</p>
+<ul>
+  <li><a href="#report-is-valid-reason">report/is-valid-reason</a></li>
+  <li><a href="#lookup-user-id">lookup/user-id</a></li>
+</ul>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authorization token</strong>.</li>
+  <li><strong>The body can’t be empty</strong> and must include <code>user_id</code>, <code>guild_id</code> and <code>reason</code>.</li>
+</ul>
+
+<p><code>{
+    user_id: 12345
+    guild_id: 12345
+    reason: Trolling
+}</code></p>
+
+<h3 id="response">Response</h3>
+
+<p><strong>If reason is not a valid iReport reason:</strong></p>
+
+<p><code>Status: 204 No Content</code>
+<code>{
+    error: "Not a valid report"
+}</code></p>
+
+<p><strong>If the guild does not exist in iReport:</strong></p>
+
+<p><code>Status: 403 Forbidden</code>
+<code>{
+    error: "Guild not iReport"
+}</code></p>
+
+<p><strong>If the reason is valid and the given guild exists in iReport:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    latestReport: null 
+    configuredChannel: null 
+}</code></p>
+
+<ul>
+  <li>latestReport may contain report, see structure in <a href="#lookup-report-id">lookup/report-id</a></li>
+  <li>configuredChannel may contain configured Discord channel ID.</li>
+</ul>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>
+
+          </section>
+        </div>
+      </div>
+      
+      <div class="article">
+        
+          <div class="method-header POST">
+            <code><b>POST</b> /ireport/preferences/set/notificationchannel</code>
+          </div> 
+        
+        <div class="post ">
+          <a name='/set-notification-channel' href='#/set-notification-channel'>
+            <h2>Set Notification Channel </h2>
+          </a>
+    
+          <section class='body'>
+            <p>This method allows a client to set the server-assigned Notification Channel, which is the Discord Channel ID that is used for iReport Notifications, such as join notifications and Report Suggestions.</p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authorization token</strong>.</li>
+  <li><strong>The body can’t be empty</strong> and must include <code>guild_id</code>, and <code>role_id</code>.</li>
+</ul>
+
+<p><code>{
+    guild_id: 123
+    channel_id: 123
+}</code></p>
+
+<h3 id="response">Response</h3>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    channel: 123 
+}</code></p>
+
+<p><strong><code>channel</code> returned is the new modrole.</strong></p>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>
+
+          </section>
+        </div>
+      </div>
+      
+      <div class="article">
+        
+          <div class="method-header POST">
+            <code><b>POST</b> /ireport/preferences/set/modrole</code>
+          </div> 
+        
+        <div class="post ">
+          <a name='/set-modrole' href='#/set-modrole'>
+            <h2>Set Mod Role </h2>
+          </a>
+    
+          <section class='body'>
+            <p>This method allows a client to set the server-assigned mod role, which is the Discord Role ID that has command permissions attached to it.</p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authorization token</strong>.</li>
+  <li><strong>The body can’t be empty</strong> and must include <code>guild_id</code>, and <code>role_id</code>.</li>
+</ul>
+
+<p><code>{
+    guild_id: 123
+    role_id: 123
+}</code></p>
+
+<h3 id="response">Response</h3>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    modrole: 123 
+}</code></p>
+
+<p><strong><code>modrole</code> returned is the new modrole.</strong></p>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>
+
+          </section>
+        </div>
+      </div>
+      
+      <div class="article">
+        
+          <div class="method-header GET">
+            <code><b>GET</b> /ireport/preferences/get/notificationchannel</code>
+          </div> 
+        
+        <div class="post ">
+          <a name='/get-notification-channel' href='#/get-notification-channel'>
+            <h2>Get Notification Channel </h2>
+          </a>
+    
+          <section class='body'>
+            <p>This method allows a client to retrieve the server-assigned Notification Channel, which is the Discord Channel ID that is used for iReport Notifications, such as join notifications and Report Suggestions.</p>
+
+<h3 id="request">Request</h3>
+
+<p>Expects the following URL query parameters:</p>
+<ul>
+  <li>
+    <p>guild_id</p>
+  </li>
+  <li>
+    <p>The headers must include a <strong>valid authorization token</strong>.</p>
+  </li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    channel: 123 
+}</code></p>
+
+<p><strong><code>channel</code> may be null if not guild is configured.</strong></p>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>
+
+          </section>
+        </div>
+      </div>
+      
+      <div class="article">
+        
+          <div class="method-header GET">
+            <code><b>GET</b> /ireport/preferences/get/modrole</code>
+          </div> 
+        
+        <div class="post ">
+          <a name='/get-modrole' href='#/get-modrole'>
+            <h2>Get Mod Role </h2>
+          </a>
+    
+          <section class='body'>
+            <p>This method allows a client to retrieve the server-assigned mod role, which is the Discord Role ID that has command permissions attached to it.</p>
+
+<h3 id="request">Request</h3>
+
+<p>Expects the following URL query parameters:</p>
+<ul>
+  <li>
+    <p>guild_id</p>
+  </li>
+  <li>
+    <p>The headers must include a <strong>valid authorization token</strong>.</p>
+  </li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    modrole: 123 
+}</code></p>
+
+<p><strong><code>modrole</code> may be null if not guild is configured.</strong></p>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>
+
+          </section>
+        </div>
+      </div>
+      
+      <div class="article">
+        
+          <div class="method-header POST">
+            <code><b>POST</b> /ireport/create</code>
+          </div> 
+        
+        <div class="post ">
+          <a name='/create-report' href='#/create-report'>
+            <h2>Create Preferences </h2>
+          </a>
+    
+          <section class='body'>
+            <p>This method allows a client to create a new iReport.</p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authorization token</strong>.</li>
+  <li><strong>The body can’t be empty</strong> and must include <code>guild_id</code>, <code>reason</code>, and <code>reporter_id</code> (the ID of the Discord user who created the iReport - this should be the user who actioned the creation of said report, or, in the case of a iReport Suggestions style feature, the user who allowed ).</li>
+</ul>
+
+<p><code>{
+    guild_id: 123,
+    reporter_id: 123
+}</code></p>
+
+<h3 id="response">Response</h3>
+
+<p><strong>If the configuration already exists:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    created: false
+    message: "Configuration already exists."
+}</code></p>
+
+<p><strong>If the configuration does not exist:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    created: true,
+    preferences: {
+        _id: guild_id
+        channel: null,
+        modrole: null,
+        approved: false
+    }
+}</code></p>
+
+<p><strong>To ensure the safety of the iReport network, a guild must be approved by iReport. Please contact the iReport server for more details about how this can be achieved</strong>.</p>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>
+
+          </section>
+        </div>
+      </div>
+      
+      <div class="article">
+        
+          <div class="method-header POST">
+            <code><b>POST</b> /ireport/preferences/set/create-preferences</code>
+          </div> 
+        
+        <div class="post ">
+          <a name='/create-preferences' href='#/create-preferences'>
+            <h2>Create Preferences </h2>
+          </a>
+    
+          <section class='body'>
+            <p>This method allows a client to register a guild with iReport. <strong>This is not required if the iReport bot has joined the guild</strong>, and is only needed to be run once if the iReport bot has not joined a given guild.</p>
+
+<p><strong>This should not be used to add unapproved iReport servers to iReport. As an API client, you do not have authority to approve a guild, and there are protections in place to ensure that non-approved guilds cannot create reports. Please contact the iReport Server for more information.</strong></p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authorization token</strong>.</li>
+  <li><strong>The body can’t be empty</strong> and must include <code>guild_id</code>.</li>
+</ul>
+
+<p><code>{
+    guild_id: 123
+}</code></p>
+
+<h3 id="response">Response</h3>
+
+<p><strong>If the configuration already exists:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    created: false
+    message: "Configuration already exists."
+}</code></p>
+
+<p><strong>If the configuration does not exist:</strong></p>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    created: true,
+    preferences: {
+        _id: guild_id
+        channel: null,
+        modrole: null,
+        approved: false
+    }
+}</code></p>
+
+<p><strong>To ensure the safety of the iReport network, a guild must be approved by iReport. Please contact the iReport server for more details about how this can be achieved</strong>.</p>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>
+
+          </section>
+        </div>
+      </div>
+      
+  
+    <h2 class="category-title">Access 70</h2>
+      
+      <div class="article">
+        
+          <div class="method-header DELETE">
+            <code><b>DELETE</b> /ireport/delete</code>
+          </div> 
+        
+        <div class="post ">
+          <a name='/delete-a-thing' href='#/delete-a-thing'>
+            <h2>Delete an iReport </h2>
+          </a>
+    
+          <section class='body'>
+            <p>This method allows a client to delete an existing iReport.</p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li><strong><code>:id</code></strong> is the id the thing to delete.</li>
+</ul>
+
+<p><code>{
+    guild_id: 123,
+    reporter_id: 123
+}</code></p>
+
+<ul>
+  <li>The headers must include a <strong>valid authorization token</strong>.</li>
+</ul>
+
+<h3 id="response">Response</h3>
+
+<p>Sends back a collection of things.</p>
+
+<p><code>Status: 200 Deleted</code>
+<code>{
+    code: 200,
+    message: 'Your thing (id: 736) was deleted'
+}</code></p>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>
+
+          </section>
+        </div>
+      </div>
+      
+  
+
+  
+</section>
+
+  
+  <!--[if lt IE 9]><script src='http://html5shim.googlecode.com/svn/trunk/html5.js'></script><![endif]-->
+  <script src='assets.js' type='text/javascript'></script>
+  <script>require('boot');</script>
+</body>
+</html>

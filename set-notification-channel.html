@@ -1,0 +1,24 @@
+<p>This method allows a client to set the server-assigned Notification Channel, which is the Discord Channel ID that is used for iReport Notifications, such as join notifications and Report Suggestions.</p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authorization token</strong>.</li>
+  <li><strong>The body can’t be empty</strong> and must include <code>guild_id</code>, and <code>role_id</code>.</li>
+</ul>
+
+<p><code>{
+    guild_id: 123
+    channel_id: 123
+}</code></p>
+
+<h3 id="response">Response</h3>
+
+<p><code>Status: 200 OK</code>
+<code>{
+    channel: 123 
+}</code></p>
+
+<p><strong><code>channel</code> returned is the new modrole.</strong></p>
+
+<p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>
