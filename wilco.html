@@ -12,12 +12,12 @@
 <ul>
   <li><a href="#report-is-valid-reason">report/is-valid-reason</a></li>
   <li><a href="#lookup-user-id">lookup/user-id</a></li>
+  <li><a href="#get-notification-channel">preferences/get/notificationchannel</a></li>
 </ul>
 
 <h3 id="request">Request</h3>
 
 <ul>
-  <li>The headers must include a <strong>valid authorization token</strong>.</li>
   <li><strong>The body can’t be empty</strong> and must include <code>user_id</code>, <code>guild_id</code> and <code>reason</code>.</li>
 </ul>
 
@@ -26,6 +26,8 @@
     guild_id: 12345
     reason: Trolling
 }</code></p>
+
+<p>The headers must include a <strong>valid authorization token</strong>.</p>
 
 <h3 id="response">Response</h3>
 

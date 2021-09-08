@@ -12,8 +12,8 @@
 
 <p><strong>If an iReport with the given ID is found, expect:</strong></p>
 
-<p><code>Status: 200 OK</code></p>
-<pre><code>{
+<p><code>Status: 200 OK</code>
+<code>{
     "_id": "1629801524773",
     "user_id": "195531486638637056",
     "reason": "Spam and trolling",
@@ -22,14 +22,14 @@
     "created_at": "2021-08-24T10:38:44.773Z",
     "audited": false
 }
-</code></pre>
+</code></p>
 
 <p><strong>If a report is not found, expect:</strong></p>
 
-<p><code>Status: 404 Not Found</code></p>
-<pre><code>{
+<p><code>Status: 404 Not Found</code>
+<code>{
     "error": "Report not found."
 }
-</code></pre>
+</code></p>
 
 <p>For errors responses, see the <a href="#response-status-codes">response status codes documentation</a>.</p>
